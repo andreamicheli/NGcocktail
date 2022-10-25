@@ -1,0 +1,41 @@
+<div class="wrapper">
+    <div class="left">
+        <div class="title">
+            THE ULTIMATE<br />
+            APERITIVO<br />
+            APP!
+        </div>
+        <div class="caption">
+            You can search for exclusive ready-made cocktails by full-name or letter, or you can get details for
+            particular ingredients of your interest. This website is based on the open API
+            <a href="{{'https://www.thecocktaildb.com/'}}">thecocktaildb</a> which provides
+            free high quality data to use.
+        </div>
+    </div>
+    <div class="right">
+        <div>
+            <label for="cname">Cocktail Name: </label>
+            <input id="cname" type="text" formControlName="cocktailname">
+        </div>
+        <div>
+            <label for="cletter">Cocktail Letter:
+                <div style="margin-left: .5em">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="plus" width="20" height="20" viewBox="0 0 160 160"
+                        (click)="plus=!plus" [ngClass]="plus ? '' : 'minus'">
+                        <rect class="vertical-line" x="70" width="20" height="160" />
+                        <rect class="horizontal-line" y="70" width="160" height="20" />
+                    </svg>
+                </div>
+            </label>
+            <div class="tagcontainer" *ngIf="!plus">
+                <div class="tag" *ngFor="let letter of alphabet">
+                    {{letter}}
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="iname">Ingredient Name: </label>
+            <input id="iname" type="text" formControlName="ingredientname">
+        </div>
+    </div>
+</div>
