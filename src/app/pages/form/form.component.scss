@@ -1,3 +1,10 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 .wrapper{
     display: flex;
     gap: 3em;
@@ -9,7 +16,7 @@
     max-width: fit-content;
     flex-direction: column;
     align-items:flex-end;
-    width: 60vw;
+    min-width: 60vw;
 }
 
 .right{
@@ -28,7 +35,7 @@
 .title{
     font-size: 7em;
     width: max-content;
-    color: mediumvioletred;
+    color: #c71585;
     text-align: right;
     font-family: 'Raleway', sans-serif;
 }
@@ -38,6 +45,7 @@
     font-weight: lighter;    
     padding: 1em;
     text-align: right;
+    max-width: 30em;
 }
 
 a{

@@ -1,0 +1,69 @@
+.wrapper{
+    display: flex;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    font-size: 2em;
+    width: 50%;
+}
+
+.tag{
+    background-color: transparent;
+    padding: .2em;
+    border-radius: 15px;
+    font-size: .7em;
+    border-color: mediumvioletred;
+    height: fit-content;
+    color: mediumvioletred;
+    width: fit-content;
+    border-style: solid;
+    width: fit-content;
+    text-align: center; 
+    font-weight: 700;
+}
+
+span{
+    color: mediumvioletred;
+    font-weight: lighter;
+}
+
+.recipe{
+    position: relative;
+    width: 30em;
+    height: 20em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-size: 35px;
+}
+
+#paper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    flex-shrink: 0;
+    max-width: 100%;
+    max-height: 100%;
+
+}
+
+ul{
+    position: absolute;
+    z-index: 10;
+    left: 250px;
+    top: 150px;
+}
+
+.right{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+#drink{
+    border-radius: 25px;
+}

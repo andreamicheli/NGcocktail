@@ -11,11 +11,15 @@ export class CocktailapiService {
 
   constructor(private http: HttpClient) { }
 
-  private Url = 'www.thecocktaildb.com/api/json/v1/1/search.php';
+  private Url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php';
 
 
-  getCocktailname(letter: string): Observable<any> {
-    return this.http.get<any>(`${this.Url}/?f=${letter}`)
+  getCocktailletter(letter: string): Observable<any> {
+    return this.http.get<any>(`${this.Url}?f=${letter}`)
+  }
+
+  getCocktailname(name: string): Observable<any> {
+    return this.http.get<any>(`${this.Url}?s=${name}`)
   }
 
 }

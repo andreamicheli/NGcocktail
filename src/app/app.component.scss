@@ -16,7 +16,9 @@
     display: flex;
     align-items: center;
     height: max-content;
-    width: 100%;
+    width: fit-content;
+    cursor: pointer;
+    align-self: self-start;
 }
 
 .wrapper{

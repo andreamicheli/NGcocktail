@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatakeepService } from 'src/app/services/datakeep.service';
 
 @Component({
   selector: 'app-ingredient',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IngredientComponent implements OnInit {
 
-  constructor() { }
+  constructor(private datakeep: DatakeepService) { }
+
+  ingredient = this.datakeep.ingredientname;
 
   ngOnInit(): void {
   }

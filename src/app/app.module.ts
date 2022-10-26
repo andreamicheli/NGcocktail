@@ -8,6 +8,7 @@ import { FormComponent } from './pages/form/form.component';
 import { CocktailComponent } from './pages/cocktail/cocktail.component';
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormComponent,
     CocktailComponent,
     IngredientComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule,

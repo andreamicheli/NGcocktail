@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DatakeepService } from 'src/app/services/datakeep.service';
 
 
 @Component({
@@ -9,10 +11,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute, private datakeep: DatakeepService) { }
 
   alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('')
   plus: boolean = true;
+  table: boolean = false;
 
 
   formdata = new FormGroup({
@@ -20,6 +23,21 @@ export class FormComponent implements OnInit {
     cocktailletter: new FormControl(""),
     ingredientname: new FormControl("")
   })
+
+  onSubmit = () => {
+    if (!!this.formdata.get('cocktailletter')?.value) {
+      this.table = true;
+    }
+    if (!!this.formdata.get('cocktailname')?.value) {
+      this.datakeep.setCocktailname(this.formdata.get('cocktailname')?.value!);
+      this.datakeep.setCocktail(null);
+      this.router.navigate([`/cocktail`], { relativeTo: this.route });
+    }
+    if (!!this.formdata.get('ingredientname')?.value) {
+      this.datakeep.setIngredientname(this.formdata.get('ingredientname')?.value!);
+      this.router.navigate([`/ingredient`], { relativeTo: this.route });
+    }
+  }
 
   disable = (form: string) => {
     for (let control of Object.keys(this.formdata.controls)) {

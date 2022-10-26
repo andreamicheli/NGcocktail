@@ -1,1 +1,23 @@
-<p>cocktail works!</p>
+<div *ngIf="!!cocktail" class="wrapper">
+    <div class="left">
+        <div style="display: flex; gap: 2em; align-items: center;">
+            <h1 style="margin: 0;">{{cocktail.name}}</h1>
+            <div class="tag">{{cocktail.category}}</div>
+        </div>
+        <div>Alchool grade: <span>{{cocktail.type}}</span></div>
+        <div>Suggested Glass: <span>{{cocktail.glass}}</span></div>
+        <div class="recipe">
+            <img src="../../../assets/paper.png" alt="" id="paper">
+            <ul>
+                <ng-container *ngFor="let ingredient of cocktail.ingredients">
+                    <li *ngIf="!!ingredient.name">
+                        {{ingredient.name}} {{ingredient.measure}}
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+    <div class="right">
+        <img src="{{cocktail['image']}}" alt="picture of {{cocktail.name}}" id="drink">
+    </div>
+</div>

@@ -1,60 +1,67 @@
-<div class="wrapper">
-    <div class="left">
-        <div class="title">
-            THE ULTIMATE<br />
-            APERITIVO<br />
-            APP!
+<div class="main">
+
+    <div class="wrapper">
+        <div class="left">
+            <div class="title">
+                THE ULTIMATE<br />
+                APERITIVO<br />
+                APP!
+            </div>
+            <div class="caption">
+                You can search for exclusive ready-made cocktails by full-name or letter, or you can get details for
+                particular ingredients of your interest. This website is based on the open API
+                <a href="{{'https://www.thecocktaildb.com/'}}">thecocktaildb</a> which provides
+                free high quality data to use.
+            </div>
         </div>
-        <div class="caption">
-            You can search for exclusive ready-made cocktails by full-name or letter, or you can get details for
-            particular ingredients of your interest. This website is based on the open API
-            <a href="{{'https://www.thecocktaildb.com/'}}">thecocktaildb</a> which provides
-            free high quality data to use.
-        </div>
+        <form class="right" [formGroup]="formdata" (ngSubmit)="onSubmit()">
+
+            <div class="mobileinline">
+                <div class="formgroup">
+                    <label for="cname">Cocktail Name: </label>
+                    <input autocomplete="off" id="cname" type="text" formControlName="cocktailname"
+                        (focus)="disable('cocktailname')" (blur)="enable('cocktailname')">
+                </div>
+                <div class="formgroup">
+                    <label for="iname">Ingredient Name: </label>
+                    <input autocomplete="off" id="iname" type="text" formControlName="ingredientname"
+                        (focus)="disable('ingredientname')" (blur)="enable('ingredientname')">
+                </div>
+            </div>
+
+            <div>
+                <label for="cletter">Cocktail Letter:
+                    <div style="margin-left: .5em; cursor:pointer"
+                        (click)="plus=!plus; plus ? (!!formdata.get('cocktailletter')?.value ? '': enable('cocktailletter')):disable('cocktailletter')"
+                        [ngClass]="formdata.get('cocktailletter')?.disabled ? 'plusdisabled':''">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="plus" width="20" height="20"
+                            viewBox="0 0 160 160" [ngClass]="plus ? '' : 'minus'">
+                            <rect class="vertical-line" x="70" width="20" height="160" />
+                            <rect class="horizontal-line" y="70" width="160" height="20" />
+                        </svg>
+                    </div>
+                </label>
+                <div class="tagcontainer" *ngIf="!plus">
+                    <div class="tag" *ngFor="let letter of alphabet" (click)="formdata.get('cocktailletter')?.value===letter ? (formdata.get('cocktailletter')?.setValue(''))
+            : formdata.get('cocktailletter')?.setValue(letter); plus=true"
+                        [ngClass]="formdata.get('cocktailletter')?.value===letter ? 'selected' : ''">
+                        {{letter}}
+                    </div>
+                </div>
+                <div class="tag" ngClass="selected" *ngIf="!!formdata.get('cocktailletter')?.value && plus"
+                    (click)="formdata.get('cocktailletter')?.setValue(''); enable('cocktailletter')">
+                    {{formdata.get('cocktailletter')?.value}}
+                </div>
+            </div>
+
+            <div class="inline">
+                <button type="submit">SUBMIT</button>
+                <button type="reset" (click)="enable(''); table = false">CANCEL</button>
+            </div>
+        </form>
+
     </div>
-    <form class="right" [formGroup]="formdata">
+    <!-- body -->
 
-        <div class="mobileinline">
-            <div class="formgroup">
-                <label for="cname">Cocktail Name: </label>
-                <input id="cname" type="text" formControlName="cocktailname" (focus)="disable('cocktailname')"
-                    (blur)="enable('cocktailname')">
-            </div>
-            <div class="formgroup">
-                <label for="iname">Ingredient Name: </label>
-                <input id="iname" type="text" formControlName="ingredientname" (input)="disable('ingredientname')"
-                    (blur)="enable('ingredientname')">
-            </div>
-        </div>
-
-        <div>
-            <label for="cletter">Cocktail Letter:
-                <div style="margin-left: .5em; cursor:pointer"
-                    (click)="plus=!plus; plus ? (!!formdata.get('cocktailletter')?.value ? '': enable('cocktailletter')):disable('cocktailletter')"
-                    [ngClass]="formdata.get('cocktailletter')?.disabled ? 'plusdisabled':''">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="plus" width="20" height="20" viewBox="0 0 160 160"
-                        [ngClass]="plus ? '' : 'minus'">
-                        <rect class="vertical-line" x="70" width="20" height="160" />
-                        <rect class="horizontal-line" y="70" width="160" height="20" />
-                    </svg>
-                </div>
-            </label>
-            <div class="tagcontainer" *ngIf="!plus">
-                <div class="tag" *ngFor="let letter of alphabet" (click)="formdata.get('cocktailletter')?.value===letter ? (formdata.get('cocktailletter')?.setValue(''))
-                    : formdata.get('cocktailletter')?.setValue(letter); plus=true"
-                    [ngClass]="formdata.get('cocktailletter')?.value===letter ? 'selected' : ''">
-                    {{letter}}
-                </div>
-            </div>
-            <div class="tag" ngClass="selected" *ngIf="!!formdata.get('cocktailletter')?.value && plus"
-                (click)="formdata.get('cocktailletter')?.setValue(''); enable('cocktailletter')">
-                {{formdata.get('cocktailletter')?.value}}
-            </div>
-        </div>
-
-        <div class="inline">
-            <button type="submit">SUBMIT</button>
-            <button type="reset" (click)="enable('')">CANCEL</button>
-        </div>
-    </form>
+    <app-table *ngIf="table" [letter]="formdata.get('cocktailletter')?.value!"></app-table>
 </div>
