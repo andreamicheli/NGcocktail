@@ -21,6 +21,22 @@ export class FormComponent implements OnInit {
     ingredientname: new FormControl("")
   })
 
+  disable = (form: string) => {
+    for (let control of Object.keys(this.formdata.controls)) {
+      if (form !== control) {
+        this.formdata.get(control)?.disable()
+      }
+    }
+  }
+
+  enable = (form: string) => {
+    if (!(!!this.formdata.get(form)?.value)) {
+      for (let control of Object.keys(this.formdata.controls)) {
+        this.formdata.get(control)?.enable()
+      }
+    }
+  }
+
   ngOnInit(): void {
   }
 

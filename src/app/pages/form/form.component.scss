@@ -72,7 +72,7 @@ input{
 }
 
 input:focus{
-	border: none;
+	border-color: mediumvioletred;
     background-color: mediumvioletred;
     color: white;
 	outline: 0;
@@ -96,6 +96,14 @@ input:focus{
     background-color: mediumvioletred;
     color: white;
     border-color: transparent;
+    cursor: pointer;
+}
+
+.tag.selected{
+    background-color: mediumvioletred;
+    color: white;
+    border-style: solid;
+    border-color: mediumvioletred;
 }
 
 .tagcontainer{
@@ -116,33 +124,70 @@ input:focus{
     transform: scaleY(0);
 }
 
-@media (max-width: 1100px) {
-.wrapper{
-    flex-direction: column;
-    align-items: center;
-    }
-.caption{
-    display: none;
+.plusdisabled{
+    pointer-events: none;
+    fill: grey;
 }
-.title{
-    font-size: 4em;
-}
-.right{
-    width: 100%;
-    font-size: large;
-}
-.mobileinline{
+
+.inline{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 0em;
+    justify-content: start;
+    gap: 1em;
 }
-.formgroup{
-    width: 100%;
+
+button{
+    background-color: mediumvioletred;
+    color: rgb(255, 241, 224);
+    padding: .5em;
+    padding-inline: 1em;
+    font-weight: 900;
+    font-size: .8em;
+    border: none;
+    border-style: solid;
+    border-color: rgb(255, 241, 224);
+    cursor: pointer;
+
 }
-input{
-    width: 70%;
+
+button:hover{
+    background-color: rgb(255, 241, 224);
+    color: mediumvioletred;
+    border-style: solid;
+    border-color: mediumvioletred;
 }
+
+
+
+@media (max-width: 1100px) {
+    .wrapper{
+        flex-direction: column;
+        align-items: center;
+        }
+    .caption{
+        display: none;
+    }
+    .title{
+        font-size: 4em;
+    }
+    .right{
+        width: 100%;
+        font-size: 1.5em;
+    }
+    .mobileinline{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0em;
+    }
+    .formgroup{
+        width: 100%;
+    }
+    input{
+        width: 70%;
+    }
+    .inline{
+        justify-content: center;
+    }
 }
 
 @media (max-width: 690px){
