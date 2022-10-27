@@ -6,3 +6,7 @@ export interface Cocktail {
     ingredients: { name: string, measure: string }[];
     [key: string]: any;
 }
+
+export interface API {
+    drinks: Cocktail[]
+}

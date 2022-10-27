@@ -13,6 +13,7 @@ export class DatakeepService {
   ingredientname: string = '';
 
   cocktail: Cocktail | null;
+  cocktails: Cocktail[];
 
   public setCocktailname = (cname: string) => {
     this.cocktailname = cname;
@@ -24,6 +25,10 @@ export class DatakeepService {
 
   public setCocktail = (cocktailinput: Cocktail | null) => {
     this.cocktail = cocktailinput;
+  }
+
+  public setCocktails = (cocktailsinput: Cocktail[]) => {
+    this.cocktails = cocktailsinput;
   }
 
   public getCocktailname = (name: string) => {

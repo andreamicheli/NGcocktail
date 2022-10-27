@@ -12,28 +12,14 @@ export class TableComponent implements OnInit {
 
   @Input() letter: string;
 
-  entries: Cocktail[] = [];
+  entries = this.datakeep.cocktails;
 
-  constructor(private cocktailapi: CocktailapiService, private datakeep: DatakeepService) { }
+  constructor(private datakeep: DatakeepService) { }
 
   setcocktail = (item: Cocktail) => {
     this.datakeep.setCocktail(item);
   }
 
   ngOnInit(): void {
-    this.cocktailapi.getCocktailletter(this.letter).subscribe((response: { drinks: Cocktail[] }) => {
-      response.drinks.forEach(drink => {
-        this.entries!.push(
-          {
-            name: drink['strDrink'],
-            category: drink['strCategory'],
-            type: drink['strAlcoholic'],
-            glass: drink['strGlass'],
-            ingredients: [{ name: drink['strIngredient1'], measure: drink['strMeasure1'] }],
-          }
-        )
-      })
-    }
-    )
   }
 }

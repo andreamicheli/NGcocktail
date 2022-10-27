@@ -15,12 +15,13 @@
             </div>
         </div>
         <form class="right" [formGroup]="formdata" (ngSubmit)="onSubmit()">
-
             <div class="mobileinline">
                 <div class="formgroup">
                     <label for="cname">Cocktail Name: </label>
                     <input autocomplete="off" id="cname" type="text" formControlName="cocktailname"
-                        (focus)="disable('cocktailname')" (blur)="enable('cocktailname')">
+                        (focus)="disable('cocktailname')" (blur)="enable('cocktailname')"
+                        [ngClass]="showerror==='cocktailname' ? 'ierror' : ''">
+                    <div *ngIf="showerror==='cocktailname'" class="error">{{error}}</div>
                 </div>
                 <div class="formgroup">
                     <label for="iname">Ingredient Name: </label>
@@ -33,7 +34,7 @@
                 <label for="cletter">Cocktail Letter:
                     <div style="margin-left: .5em; cursor:pointer"
                         (click)="plus=!plus; plus ? (!!formdata.get('cocktailletter')?.value ? '': enable('cocktailletter')):disable('cocktailletter')"
-                        [ngClass]="formdata.get('cocktailletter')?.disabled ? 'plusdisabled':''">
+                        [ngClass]="{'plusdisabled' : formdata.get('cocktailletter')?.disabled || (table === true && dbutton === true)}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="plus" width="20" height="20"
                             viewBox="0 0 160 160" [ngClass]="plus ? '' : 'minus'">
                             <rect class="vertical-line" x="70" width="20" height="160" />
@@ -41,22 +42,23 @@
                         </svg>
                     </div>
                 </label>
+                <div *ngIf="showerror==='cocktailletter'" class="error">{{error}}</div>
                 <div class="tagcontainer" *ngIf="!plus">
-                    <div class="tag" *ngFor="let letter of alphabet" (click)="formdata.get('cocktailletter')?.value===letter ? (formdata.get('cocktailletter')?.setValue(''))
-            : formdata.get('cocktailletter')?.setValue(letter); plus=true"
-                        [ngClass]="formdata.get('cocktailletter')?.value===letter ? 'selected' : ''">
+                    <div class="tag" *ngFor="let letter of alphabet" (click)="clicktag(letter)"
+                        [ngClass]="{'selected': formdata.get('cocktailletter')?.value===letter}">
                         {{letter}}
                     </div>
                 </div>
-                <div class="tag" ngClass="selected" *ngIf="!!formdata.get('cocktailletter')?.value && plus"
-                    (click)="formdata.get('cocktailletter')?.setValue(''); enable('cocktailletter')">
+                <div class="tag selected" *ngIf="!!formdata.get('cocktailletter')?.value && plus"
+                    (click)="formdata.get('cocktailletter')?.setValue(''); enable('cocktailletter')"
+                    [ngClass]="{'dis': (table === true && dbutton === true)}">
                     {{formdata.get('cocktailletter')?.value}}
                 </div>
             </div>
 
             <div class="inline">
-                <button type="submit">SUBMIT</button>
-                <button type="reset" (click)="enable(''); table = false">CANCEL</button>
+                <button type="submit" [ngClass]="dbutton ? 'dis': ''">SUBMIT</button>
+                <button type="reset" (click)="enable(''); table = false; dbutton=true">CANCEL</button>
             </div>
         </form>
 
