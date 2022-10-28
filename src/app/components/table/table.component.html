@@ -1,5 +1,8 @@
 <div class="wrapper">
     <div class="header">
+        <div>
+            <mat-icon class="order" (click)="ordertable()">filter_list</mat-icon>
+        </div>
         <h1>Cocktails found by letter <span style="color: rgb(255, 241, 224); font-weight: bold;">{{letter}}</span></h1>
         <div class="countercontainer">
             <div class="counter" (click)="(index>1) ? (index=index-1) : (index=index)"
@@ -40,7 +43,9 @@
                             <td>{{item.category}}</td>
                             <td>{{item.type}}</td>
                             <td>{{item.glass}}</td>
-                            <td>{{item.ingredients[0].name}}</td>
+                            <td (click)="ingredientclick(item.ingredients[0].name)" routerLink="/cocktail"
+                                class="ingredient">
+                                {{item.ingredients[0].name}}</td>
                             <td><button (click)="setcocktail(item)" routerLink="/cocktail">
                                     <mat-icon class="arrow">arrow_forward</mat-icon>
                                 </button></td>

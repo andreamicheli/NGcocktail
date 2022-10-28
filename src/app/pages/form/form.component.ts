@@ -209,7 +209,6 @@ export class FormComponent implements OnInit {
 
     }
     if (!!this.formdata.get('ingredientname')?.value) {
-      let cocktail: Cocktail;
       this.datakeep.setIngredientname(this.formdata.get('ingredientname')?.value!);
       this.cocktailapi.getHTTPIngredientname(this.formdata.get('ingredientname')?.value!)
         .pipe(
@@ -283,6 +282,8 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.datakeep.cocktail = null;
+    this.datakeep.ingredient = null;
   }
 
 }

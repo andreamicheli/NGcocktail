@@ -1,9 +1,15 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="!!ingredient, else noingredient">
     <div class="inline">
-        <h1>{{ingredient?.name}}</h1>
-        <div class="tag" *ngIf="!!ingredient?.alcoholgraduation">{{ingredient?.alcoholgraduation}}°</div>
+        <h1>{{ingredient.name}}</h1>
+        <div class="tag" *ngIf="!!ingredient?.alcoholgraduation">{{ingredient.alcoholgraduation}}°</div>
     </div>
     <div class="formatted">
-        <pre>{{ingredient?.description}}</pre>
+        <pre>{{ingredient.description}}</pre>
     </div>
 </div>
+
+<ng-template #noingredient>
+    NO INGREDIENT HAS BEEN SELECTED!<br />
+    go back <span routerLink="/" style="cursor: pointer; color: mediumvioletred;">HOME</span>
+
+</ng-template>

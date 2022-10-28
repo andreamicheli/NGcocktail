@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CocktailapiService } from 'src/app/services/cocktailapi.service';
 import { DatakeepService } from 'src/app/services/datakeep.service';
 import { Cocktail } from 'src/app/types';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -16,7 +17,7 @@ export class TableComponent implements OnInit {
   paginated: Cocktail[][] = [[]];
   index: number = 1;
 
-  constructor(private datakeep: DatakeepService) { }
+  constructor(private datakeep: DatakeepService, private router: Router, private route: ActivatedRoute) { }
 
   setcocktail = (item: Cocktail) => {
     this.datakeep.setCocktail(item);
@@ -31,8 +32,17 @@ export class TableComponent implements OnInit {
     this.paginated = paginated;
   }
 
-  ngOnInit(): void {
-    console.log(this.formatdata(this.datakeep.cocktails));
+  ordertable = () => {
+    this.formatdata(this.entries.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)))
+  }
 
+  ingredientclick = (iname: string) => {
+    this.datakeep.ingredientname = iname;
+    this.router.navigate([`/ingredient`], { relativeTo: this.route });
+  }
+
+  ngOnInit(): void {
+    this.formatdata(this.entries)
+    console.log(this.entries);
   }
 }
