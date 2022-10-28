@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cocktail } from '../types';
+import { Cocktail, Ingredient } from '../types';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,7 @@ export class DatakeepService {
 
   cocktail: Cocktail | null;
   cocktails: Cocktail[];
+  ingredient: Ingredient | null;
 
   public setCocktailname = (cname: string) => {
     this.cocktailname = cname;
@@ -29,6 +30,10 @@ export class DatakeepService {
 
   public setCocktails = (cocktailsinput: Cocktail[]) => {
     this.cocktails = cocktailsinput;
+  }
+
+  public setIngredient = (ingredientinput: Ingredient | null) => {
+    this.ingredient = ingredientinput;
   }
 
   public getCocktailname = (name: string) => {

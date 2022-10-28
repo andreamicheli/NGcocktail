@@ -1,5 +1,21 @@
 <div class="wrapper">
-    <h1>Cocktails found by letter <span style="color: rgb(255, 241, 224); font-weight: bold;">{{letter}}</span></h1>
+    <div class="header">
+        <h1>Cocktails found by letter <span style="color: rgb(255, 241, 224); font-weight: bold;">{{letter}}</span></h1>
+        <div class="countercontainer">
+            <div class="counter" (click)="(index>1) ? (index=index-1) : (index=index)"
+                [ngClass]="{'disabled': (index===1)}">
+                <mat-icon [ngStyle]="{'color': index===1 ? 'white':'mediumvioletred'}" class="icon">navigate_before
+                </mat-icon>
+            </div>
+            <div class="counter" style="width: 1em; pointer-events: none;">{{index}}</div>
+            <div class="counter" (click)="(index<paginated.length) ? (index=index+1) : (index=index)"
+                [ngClass]="{'disabled': (index===paginated.length)}">
+                <mat-icon [ngStyle]="{'color': index===paginated.length ? 'white':'mediumvioletred'}" class="icon">
+                    navigate_next
+                </mat-icon>
+            </div>
+        </div>
+    </div>
     <div class="table">
         <div class="tbl-header">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -17,16 +33,20 @@
         </div>
         <div class="tbl-content">
             <table cellpadding="0" cellspacing="0" border="0">
-                <tbody>
-                    <tr *ngFor="let item of entries">
-                        <td>{{item.name}}</td>
-                        <td>{{item.category}}</td>
-                        <td>{{item.type}}</td>
-                        <td>{{item.glass}}</td>
-                        <td>{{item.ingredients[0].name}}</td>
-                        <td><button (click)="setcocktail(item)" routerLink="/cocktail">go</button></td>
-                    </tr>
-                </tbody>
+                <ng-container *ngFor="let array of paginated">
+                    <tbody *ngIf="paginated.indexOf(array)===(index-1)">
+                        <tr *ngFor="let item of array">
+                            <td>{{item.name}}</td>
+                            <td>{{item.category}}</td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.glass}}</td>
+                            <td>{{item.ingredients[0].name}}</td>
+                            <td><button (click)="setcocktail(item)" routerLink="/cocktail">
+                                    <mat-icon class="arrow">arrow_forward</mat-icon>
+                                </button></td>
+                        </tr>
+                    </tbody>
+                </ng-container>
             </table>
         </div>
     </div>

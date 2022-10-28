@@ -7,6 +7,13 @@ export interface Cocktail {
     [key: string]: any;
 }
 
+export interface Ingredient {
+    name: string;
+    description: string;
+    alcoholgraduation: string;
+    [key: string]: any;
+}
+
 export interface API {
     drinks: Cocktail[]
 }

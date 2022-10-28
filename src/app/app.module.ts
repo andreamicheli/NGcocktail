@@ -9,6 +9,9 @@ import { CocktailComponent } from './pages/cocktail/cocktail.component';
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './components/table/table.component';
+import { MatIconModule } from '@angular/material/icon';
+
+
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { TableComponent } from './components/table/table.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,6 +13,8 @@ export class TableComponent implements OnInit {
   @Input() letter: string;
 
   entries = this.datakeep.cocktails;
+  paginated: Cocktail[][] = [[]];
+  index: number = 1;
 
   constructor(private datakeep: DatakeepService) { }
 
@@ -20,6 +22,17 @@ export class TableComponent implements OnInit {
     this.datakeep.setCocktail(item);
   }
 
+  formatdata = (cocktails: Cocktail[]) => {
+    let paginated: Cocktail[][] = [[]]
+    for (let i = 0; i < cocktails.length; i++) {
+      if (paginated[Math.floor(i / 4)] === undefined) { paginated.push([]) }
+      paginated[Math.floor(i / 4)].push(cocktails[i])
+    }
+    this.paginated = paginated;
+  }
+
   ngOnInit(): void {
+    console.log(this.formatdata(this.datakeep.cocktails));
+
   }
 }

@@ -38,9 +38,10 @@ export class FormComponent implements OnInit {
   onSubmit = () => {
     if (!!this.formdata.get('cocktailletter')?.value) {
       this.cocktailapi.getHTTPCocktailletter(this.formdata.get('cocktailletter')?.value!)
-        .pipe(
-          map((drinks) => {
-            return drinks.map(drink => {
+        //ritorna un Observable di tipo API (guardare nel browser la formattazione della response)
+        .pipe( //esegue in ordine una serie di operazioni
+          map((drinks) => {//ritorna una versione modificata della risposta
+            return drinks.map(drink => {//formatto ogni elemento dell'array
               return ({
                 name: drink['strDrink'],
                 category: drink['strCategory'],
@@ -110,11 +111,13 @@ export class FormComponent implements OnInit {
               } as Cocktail)
             })
           }),
-          catchError((e) => {
+          catchError((e) => {//in caso di errore
+            //throwError se non voglio andare nel subscribe (non ho un valore di default)
+            //handleError se voglio andare nel subscribe (ho un valore di default)
             return throwError(() => this.changeshow('ATTENTION! we have not found any cocktail with this letter', 'cocktailletter'))
           })
         )
-        .subscribe((drinks) => {
+        .subscribe((drinks) => {//'apro' il pacchetto
           this.datakeep.setCocktails(drinks);
           this.table = true;
           this.dbutton = true;
@@ -206,7 +209,27 @@ export class FormComponent implements OnInit {
 
     }
     if (!!this.formdata.get('ingredientname')?.value) {
+      let cocktail: Cocktail;
       this.datakeep.setIngredientname(this.formdata.get('ingredientname')?.value!);
+      this.cocktailapi.getHTTPIngredientname(this.formdata.get('ingredientname')?.value!)
+        .pipe(
+          map((ingredients) => {
+            return ingredients[0]
+          }),
+          catchError((e) => {
+            return throwError(() => this.changeshow('ATTENTION! we have not found an ingredient with this name', 'ingredientname'))
+          }))
+
+        .subscribe((ingredient) => {
+          this.datakeep.setIngredient({
+            name: ingredient['strIngredient'],
+            description: ingredient['strDescription'],
+            alcoholgraduation: ingredient['strABV'],
+          })
+          console.log(ingredient);
+
+          this.router.navigate([`/ingredient`], { relativeTo: this.route });
+        })
 
     }
   }

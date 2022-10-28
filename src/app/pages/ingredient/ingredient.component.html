@@ -1,1 +1,9 @@
-<p>ingredient works!</p>
+<div class="wrapper">
+    <div class="inline">
+        <h1>{{ingredient?.name}}</h1>
+        <div class="tag" *ngIf="!!ingredient?.alcoholgraduation">{{ingredient?.alcoholgraduation}}°</div>
+    </div>
+    <div class="formatted">
+        <pre>{{ingredient?.description}}</pre>
+    </div>
+</div>

@@ -26,7 +26,11 @@
                 <div class="formgroup">
                     <label for="iname">Ingredient Name: </label>
                     <input autocomplete="off" id="iname" type="text" formControlName="ingredientname"
-                        (focus)="disable('ingredientname')" (blur)="enable('ingredientname')">
+                        (focus)="disable('ingredientname')" (blur)="enable('ingredientname')"
+                        [ngClass]="showerror==='ingredientname' ? 'ierror' : ''">
+
+                    <div *ngIf="showerror==='ingredientname'" class="error">{{error}}</div>
+
                 </div>
             </div>
 
@@ -57,7 +61,7 @@
             </div>
 
             <div class="inline">
-                <button type="submit" [ngClass]="dbutton ? 'dis': ''">SUBMIT</button>
+                <button type="submit" [ngClass]="dbutton ? 'dis': ''">SEARCH</button>
                 <button type="reset" (click)="enable(''); table = false; dbutton=true">CANCEL</button>
             </div>
         </form>
