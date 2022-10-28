@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs';
-import { API, Ingredient } from '../types';
+import { API, category, Ingredient } from '../types';
 
 
 
@@ -38,6 +38,16 @@ export class CocktailapiService {
       })
     )
   }
+
+  getHTTPCategories() {
+    return this.http.get<{ drinks: { strCategory: string }[] }>(`https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list`).pipe(
+      map((res) => {
+        return res['drinks']
+      })
+    )
+  }
+
+
 
 }
 

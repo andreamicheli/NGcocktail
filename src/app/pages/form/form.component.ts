@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, catchError, throwError, of, map, tap } from 'rxjs';
 import { CocktailapiService } from 'src/app/services/cocktailapi.service';
 import { DatakeepService } from 'src/app/services/datakeep.service';
-import { Cocktail } from 'src/app/types';
+import { category, Cocktail } from 'src/app/types';
 
 
 @Component({
@@ -280,10 +280,30 @@ export class FormComponent implements OnInit {
     }, 2000);
   }
 
+  getcategories = () => {
+    this.cocktailapi.getHTTPCategories()
+      .pipe(
+        map((categories) => {
+          return categories.map((item) => {
+            return ({
+              name: item['strCategory']
+            } as category)
+          })
+        }))
+
+      .subscribe((categories) => {
+        this.datakeep.categories = categories;
+        console.log(this.datakeep.categories)
+      })
+  }
+
 
   ngOnInit(): void {
     this.datakeep.cocktail = null;
     this.datakeep.ingredient = null;
+    this.getcategories()
+
+    // this.datakeep.categories  = 
   }
 
 }

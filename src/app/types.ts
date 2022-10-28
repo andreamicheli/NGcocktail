@@ -17,3 +17,7 @@ export interface Ingredient {
 export interface API {
     drinks: Cocktail[]
 }
+
+export interface category {
+    name: string;
+}
