@@ -349,16 +349,21 @@ export class FormComponent implements OnInit {
   }
 
   clicktag = (letter: string) => {
-    this.formdata.get('cocktailletter')?.value === letter ?
-      (this.formdata.get('cocktailletter')?.setValue(''))
-      : this.formdata.get('cocktailletter')?.setValue(letter);
+    if (this.formdata.get('cocktailletter')?.value === letter) {
+      this.formdata.get('cocktailletter')?.setValue('')
+      this.enable('cocktailletter')
+
+    }
+    else this.formdata.get('cocktailletter')?.setValue(letter);
     this.plus = true;
     this.disableButton();
   }
   clicktagc = (name: string) => {
-    this.formdata.get('categoryname')?.value === name ?
-      (this.formdata.get('categoryname')?.setValue(''))
-      : this.formdata.get('categoryname')?.setValue(name);
+    if (this.formdata.get('categoryname')?.value === name) {
+      this.formdata.get('categoryname')?.setValue('');
+      this.enable('categoryname')
+    }
+    else this.formdata.get('categoryname')?.setValue(name);
     this.plusc = true;
     this.disableButton();
   }
