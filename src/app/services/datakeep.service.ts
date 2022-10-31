@@ -11,6 +11,7 @@ export class DatakeepService {
 
   cocktailname: string = '';
   ingredientname: string = '';
+  categoryname: string = '';
 
   cocktail: Cocktail | null;
   cocktails: Cocktail[];

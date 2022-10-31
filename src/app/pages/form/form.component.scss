@@ -124,21 +124,21 @@ input.ierror{
 
 }
 
-.tag:hover{
+.tag:hover,.tagcat:hover{
     background-color: mediumvioletred;
     color: white;
     border-color: transparent;
     cursor: pointer;
 }
 
-.tag.selected{
+.tag.selected, .tagcat.selected{
     background-color: mediumvioletred;
     color: white;
     border-style: solid;
     border-color: mediumvioletred;
 }
 
-.tag.dis{
+.tag.dis, .tagcat.dis{
     pointer-events: none;
     background-color: grey;
     border-color: grey;
@@ -149,6 +149,17 @@ input.ierror{
     flex-wrap: wrap;
     gap: .2em;
     max-width: 100%;
+}
+
+.tagcat{
+    background-color: transparent;
+    padding: .5em;
+    border-radius: 15px;
+    width: fit-content;
+    font-size: .5em;
+    border-style: solid;
+    text-align: center; 
+    font-weight: 700;
 }
 
 .plus rect {

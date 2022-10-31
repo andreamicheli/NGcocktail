@@ -17,14 +17,7 @@ export class IngredientComponent implements OnInit {
   ingredient = this.datakeep.ingredient;
 
   ngOnInit(): void {
-
-    console.log('name: ', this.ingredientname, ' object: ', this.ingredient);
-
-
     if (!!this.ingredientname && this.ingredient === null) {
-
-      console.log('dentro');
-
       //fetch ingredient here
       this.datakeep.setIngredientname(this.ingredientname);
       this.cocktailapi.getHTTPIngredientname(this.ingredientname)

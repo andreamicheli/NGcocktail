@@ -63,6 +63,32 @@
                 </div>
             </div>
 
+            <div>
+                <label for="cletter">Category:
+                    <div style="margin-left: .5em; cursor:pointer"
+                        (click)="plusc=!plusc; plusc ? (!!formdata.get('categoryname')?.value ? '': enable('categoryname')):disable('categoryname')"
+                        [ngClass]="{'plusdisabled' : formdata.get('categoryname')?.disabled || (table === true && dbutton === true)}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="plus" width="20" height="20"
+                            viewBox="0 0 160 160" [ngClass]="plusc ? '' : 'minus'">
+                            <rect class="vertical-line" x="70" width="20" height="160" />
+                            <rect class="horizontal-line" y="70" width="160" height="20" />
+                        </svg>
+                    </div>
+                </label>
+                <div *ngIf="showerror==='categoryname'" class="error">{{error}}</div>
+                <div class="tagcontainer" *ngIf="!plusc">
+                    <div class="tagcat" *ngFor="let category of categories" (click)="clicktagc(category.name)"
+                        [ngClass]="{'selected': formdata.get('categoryname')?.value===category.name}">
+                        {{category.name}}
+                    </div>
+                </div>
+                <div class="tagcat selected" *ngIf="!!formdata.get('categoryname')?.value && plusc"
+                    (click)="formdata.get('categoryname')?.setValue(''); enable('categoryname')"
+                    [ngClass]="{'dis': (table === true && dbutton === true)}">
+                    {{formdata.get('categoryname')?.value}}
+                </div>
+            </div>
+
             <div class="inline">
                 <button type="submit" [ngClass]="dbutton ? 'dis': ''">SEARCH</button>
                 <button type="reset" (click)="enable(''); table = false; dbutton=true">CANCEL</button>

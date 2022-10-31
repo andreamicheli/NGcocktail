@@ -43,6 +43,5 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.formatdata(this.entries)
-    console.log(this.entries);
   }
 }

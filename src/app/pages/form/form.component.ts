@@ -21,10 +21,12 @@ export class FormComponent implements OnInit {
 
   alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('')
   plus: boolean = true;
+  plusc: boolean = true;
   table: boolean = false;
   error: string = '';
   showerror: string = '';
   dbutton: boolean = true;
+  categories: category[] = [];
 
 
 
@@ -32,7 +34,8 @@ export class FormComponent implements OnInit {
   formdata = new FormGroup({
     cocktailname: new FormControl(""),
     cocktailletter: new FormControl(""),
-    ingredientname: new FormControl("")
+    ingredientname: new FormControl(""),
+    categoryname: new FormControl("")
   })
 
   onSubmit = () => {
@@ -225,9 +228,91 @@ export class FormComponent implements OnInit {
             description: ingredient['strDescription'],
             alcoholgraduation: ingredient['strABV'],
           })
-          console.log(ingredient);
-
           this.router.navigate([`/ingredient`], { relativeTo: this.route });
+        })
+
+    }
+    if (!!this.formdata.get('categoryname')?.value) {
+      this.datakeep.categoryname = this.formdata.get('categoryname')?.value!;
+      this.cocktailapi.getHTTPCategory(this.formdata.get('categoryname')?.value!)
+        .pipe( //esegue in ordine una serie di operazioni
+          map((drinks) => {//ritorna una versione modificata della risposta
+            return drinks.map(drink => {//formatto ogni elemento dell'array
+              return ({
+                name: drink['strDrink'],
+                category: drink['strCategory'],
+                type: drink['strAlcoholic'],
+                glass: drink['strGlass'],
+                ingredients: [
+                  {
+                    name: drink['strIngredient1'],
+                    measure: drink['strMeasure1'],
+                  },
+                  {
+                    name: drink['strIngredient2'],
+                    measure: drink['strMeasure2'],
+                  },
+                  {
+                    name: drink['strIngredient3'],
+                    measure: drink['strMeasure3'],
+                  },
+                  {
+                    name: drink['strIngredient4'],
+                    measure: drink['strMeasure4'],
+                  },
+                  {
+                    name: drink['strIngredient5'],
+                    measure: drink['strMeasure5'],
+                  },
+                  {
+                    name: drink['strIngredient6'],
+                    measure: drink['strMeasure6'],
+                  },
+                  {
+                    name: drink['strIngredient7'],
+                    measure: drink['strMeasure7'],
+                  },
+                  {
+                    name: drink['strIngredient8'],
+                    measure: drink['strMeasure8'],
+                  },
+                  {
+                    name: drink['strIngredient9'],
+                    measure: drink['strMeasure9'],
+                  },
+                  {
+                    name: drink['strIngredient9'],
+                    measure: drink['strMeasure9'],
+                  },
+                  {
+                    name: drink['strIngredient9'],
+                    measure: drink['strMeasure9'],
+                  },
+                  {
+                    name: drink['strIngredient10'],
+                    measure: drink['strMeasure10'],
+                  },
+                  {
+                    name: drink['strIngredient11'],
+                    measure: drink['strMeasure11'],
+                  },
+                  {
+                    name: drink['strIngredient12'],
+                    measure: drink['strMeasure12'],
+                  },
+
+
+                ],
+                image: drink['strDrinkThumb']
+              } as Cocktail)
+            })
+          }),
+          catchError(() => { return throwError(() => this.changeshow('ATTENTION! we have not found any cocktail with this category', 'categoryname')) })
+        )
+        .subscribe((drinks) => {//'apro' il pacchetto
+          this.datakeep.setCocktails(drinks);
+          this.table = true;
+          this.dbutton = true;
         })
 
     }
@@ -259,6 +344,7 @@ export class FormComponent implements OnInit {
     }
     if (!(!!this.formdata.get('cocktailname')?.value) &&
       !(!!this.formdata.get('cocktailletter')?.value) &&
+      !(!!this.formdata.get('categoryname')?.value) &&
       !(!!this.formdata.get('ingredientname')?.value)) this.dbutton = true;
   }
 
@@ -269,8 +355,15 @@ export class FormComponent implements OnInit {
     this.plus = true;
     this.disableButton();
   }
+  clicktagc = (name: string) => {
+    this.formdata.get('categoryname')?.value === name ?
+      (this.formdata.get('categoryname')?.setValue(''))
+      : this.formdata.get('categoryname')?.setValue(name);
+    this.plusc = true;
+    this.disableButton();
+  }
 
-  changeshow = (serror: string, terror: 'cocktailname' | 'cocktailletter' | 'ingredientname' | '') => {
+  changeshow = (serror: string, terror: 'cocktailname' | 'cocktailletter' | 'ingredientname' | 'categoryname' | '') => {
     this.showerror = terror;
     this.error = serror;
 
@@ -293,7 +386,7 @@ export class FormComponent implements OnInit {
 
       .subscribe((categories) => {
         this.datakeep.categories = categories;
-        console.log(this.datakeep.categories)
+        this.categories = categories;
       })
   }
 
