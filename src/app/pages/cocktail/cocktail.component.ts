@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
 import { catchError, map, throwError } from 'rxjs';
 import { CocktailapiService } from 'src/app/services/cocktailapi.service';
 import { DatakeepService } from 'src/app/services/datakeep.service';
+import { retrievedCocktail } from 'src/app/state/cocktail.actions';
+import { selectCocktails } from 'src/app/state/cocktail.selector';
 import { Cocktail } from 'src/app/types';
 
 @Component({
@@ -11,10 +15,23 @@ import { Cocktail } from 'src/app/types';
 })
 export class CocktailComponent implements OnInit {
 
-  constructor(private datakeep: DatakeepService, private cocktailapi: CocktailapiService) { }
+  constructor(private datakeep: DatakeepService, private cocktailapi: CocktailapiService,
+    private store: Store, private titleService: Title) { }
 
   cocktailname: string = this.datakeep.cocktailname;
   cocktail: Cocktail | null = this.datakeep.cocktail;
+  cocktails$ = this.store.select(selectCocktails);
+
+
+  getTitle = () => {
+    let title = 'cocktail'
+    this.cocktails$.subscribe((res) => {
+      if (res.name !== '') {
+        title = res.name
+      }
+    })
+    return title
+  }
 
   ngOnInit(): void {
     if (!!this.cocktail && !(!!this.cocktail?.category)) {
@@ -96,6 +113,7 @@ export class CocktailComponent implements OnInit {
             ],
             image: drink['strDrinkThumb']
           }
+          this.store.dispatch(retrievedCocktail({ cocktail }))
           this.datakeep.setCocktail(cocktail);
           this.cocktail = cocktail;
         })
@@ -103,6 +121,12 @@ export class CocktailComponent implements OnInit {
 
 
     }
+
+    this.titleService.setTitle(this.getTitle());
+
+
+
+
   }
 
 }

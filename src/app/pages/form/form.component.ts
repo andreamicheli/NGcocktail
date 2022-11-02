@@ -9,7 +9,8 @@ import { DatakeepService } from 'src/app/services/datakeep.service';
 import { category, Cocktail } from 'src/app/types';
 import { Store } from '@ngrx/store';
 import { selectCocktails, selectCocktailsDef, } from 'src/app/state/cocktail.selector';
-import { retrievedCocktailList } from 'src/app/state/cocktail.actions';
+import { retrievedCocktail } from 'src/app/state/cocktail.actions';
+import { Title } from "@angular/platform-browser";
 
 
 @Component({
@@ -21,10 +22,8 @@ export class FormComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
     private datakeep: DatakeepService, private cocktailapi: CocktailapiService,
-    private store: Store
+    private store: Store, private titleService: Title
   ) {
-    this.cocktails$ = this.store.select(selectCocktails);
-    console.log(this.cocktails$);
   }
 
   alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('')
@@ -35,13 +34,14 @@ export class FormComponent implements OnInit {
   showerror: string = '';
   dbutton: boolean = true;
   categories: category[] = [];
-  cocktails$: any;
+
+  // cocktails$ = this.store.select(selectCocktails);
 
 
 
-  onUpdate(cocktails: Cocktail[]) {
-    this.store.dispatch(retrievedCocktailList({ cocktails }));
-    console.log('acton called ', cocktails);
+  onUpdate(cocktail: Cocktail) {
+    this.store.dispatch(retrievedCocktail({ cocktail }));
+    console.log('acton called ', cocktail);
     // this.cocktails$.pipe(tap((x) => console.log(x)))
   }
 
@@ -137,7 +137,6 @@ export class FormComponent implements OnInit {
         )
         .subscribe((drinks) => {//'apro' il pacchetto
           this.datakeep.setCocktails(drinks);
-          this.onUpdate(drinks);
           this.table = true;
           this.dbutton = true;
         })
@@ -223,6 +222,7 @@ export class FormComponent implements OnInit {
             image: drink['strDrinkThumb']
           }
           this.datakeep.setCocktail(cocktail);
+          this.onUpdate(cocktail);
           this.router.navigate([`/cocktail`], { relativeTo: this.route });
         })
 
@@ -415,6 +415,8 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.datakeep.cocktail = null;
     this.datakeep.ingredient = null;
+    this.titleService.setTitle('main menu');
+    this.store.dispatch(retrievedCocktail({ cocktail: { name: '', category: '', type: '', glass: '', ingredients: [{ name: '', measure: '' }] } }))
     this.getcategories()
   }
 

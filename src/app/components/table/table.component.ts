@@ -3,6 +3,8 @@ import { CocktailapiService } from 'src/app/services/cocktailapi.service';
 import { DatakeepService } from 'src/app/services/datakeep.service';
 import { Cocktail } from 'src/app/types';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { retrievedCocktail } from 'src/app/state/cocktail.actions';
 
 @Component({
   selector: 'app-table',
@@ -17,10 +19,18 @@ export class TableComponent implements OnInit {
   paginated: Cocktail[][] = [[]];
   index: number = 1;
 
-  constructor(private datakeep: DatakeepService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private datakeep: DatakeepService, private router: Router, private route: ActivatedRoute,
+    private store: Store) { }
 
   setcocktail = (item: Cocktail) => {
+    this.onUpdate(item)
     this.datakeep.setCocktail(item);
+  }
+
+  onUpdate(cocktail: Cocktail) {
+    this.store.dispatch(retrievedCocktail({ cocktail }));
+    console.log('acton called ', cocktail);
+    // this.cocktails$.pipe(tap((x) => console.log(x)))
   }
 
   formatdata = (cocktails: Cocktail[]) => {

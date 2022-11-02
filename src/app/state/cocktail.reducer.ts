@@ -1,14 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import { Cocktail } from '../types';
-import { retrievedCocktailList } from './cocktail.actions';
+import { retrievedCocktail } from './cocktail.actions';
 
 
-export const initialState: ReadonlyArray<Cocktail> = [];
+export const initialState: Readonly<Cocktail> = { name: '', category: '', type: '', glass: '', ingredients: [{ name: '', measure: '' }] };
 
 export const cocktailsReducer = createReducer(
     initialState,
-    on(retrievedCocktailList, (state, { cocktails }) => {
-        console.log('in reducer ', cocktails);
-        return cocktails
+    on(retrievedCocktail, (state, { cocktail }) => {
+        console.log('in reducer ', cocktail);
+        return cocktail
     })
 );
