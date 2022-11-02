@@ -1,5 +1,6 @@
 <div class="main">
-
+    cocktail: <p *ngFor="let cocktail of (cocktails$ | async)">cocktail: {{cocktail.name}}</p>
+    <!-- <p *ngFor="let cocktail of (cocktails$ | async)">cocktail: {{cocktail.name}}</p> -->
     <div class="wrapper">
         <div class="left">
             <div class="title">

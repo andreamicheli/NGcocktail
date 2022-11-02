@@ -7,6 +7,9 @@ import { Observable, catchError, throwError, of, map, tap } from 'rxjs';
 import { CocktailapiService } from 'src/app/services/cocktailapi.service';
 import { DatakeepService } from 'src/app/services/datakeep.service';
 import { category, Cocktail } from 'src/app/types';
+import { Store } from '@ngrx/store';
+import { selectCocktails, selectCocktailsDef, } from 'src/app/state/cocktail.selector';
+import { retrievedCocktailList } from 'src/app/state/cocktail.actions';
 
 
 @Component({
@@ -17,7 +20,12 @@ import { category, Cocktail } from 'src/app/types';
 export class FormComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute,
-    private datakeep: DatakeepService, private cocktailapi: CocktailapiService) { }
+    private datakeep: DatakeepService, private cocktailapi: CocktailapiService,
+    private store: Store
+  ) {
+    this.cocktails$ = this.store.select(selectCocktails);
+    console.log(this.cocktails$);
+  }
 
   alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('')
   plus: boolean = true;
@@ -27,8 +35,15 @@ export class FormComponent implements OnInit {
   showerror: string = '';
   dbutton: boolean = true;
   categories: category[] = [];
+  cocktails$: any;
 
 
+
+  onUpdate(cocktails: Cocktail[]) {
+    this.store.dispatch(retrievedCocktailList({ cocktails }));
+    console.log('acton called ', cocktails);
+    // this.cocktails$.pipe(tap((x) => console.log(x)))
+  }
 
 
   formdata = new FormGroup({
@@ -122,6 +137,7 @@ export class FormComponent implements OnInit {
         )
         .subscribe((drinks) => {//'apro' il pacchetto
           this.datakeep.setCocktails(drinks);
+          this.onUpdate(drinks);
           this.table = true;
           this.dbutton = true;
         })
@@ -400,8 +416,6 @@ export class FormComponent implements OnInit {
     this.datakeep.cocktail = null;
     this.datakeep.ingredient = null;
     this.getcategories()
-
-    // this.datakeep.categories  = 
   }
 
 }
